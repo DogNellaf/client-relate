@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock title %}
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8 col-xl-6">
+                <div class="card shadow bg-secondary text-light" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5">
+                        <h3 class="mb-4">{{ title }}</h3>
+                        <form method="POST" action="{% url submit_url %}">
+                            {% csrf_token %}
+                            {{ form.type }}
+                            {{ form.status }}
+                            <div class="mb-3">
+                                <label class="form-label" for="id_title">Заголовок</label>
+                                {{ form.title }}
+                                {% if form.title.errors %}
+                                    <div class="text-danger small">{{ form.title.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="id_description">Текст</label>
+                                {{ form.description }}
+                                {% if form.description.errors %}
+                                    <div class="text-danger small">{{ form.description.errors }}</div>
+                                {% endif %}
+                            </div>
+                            {% if form.non_field_errors %}
+                                <div class="alert alert-danger py-2">{{ form.non_field_errors }}</div>
+                            {% endif %}
+                            <div class="d-flex gap-2 mt-4">
+                                <button type="submit" class="btn btn-primary">Отправить</button>
+                                <a href="{% url 'home' %}" class="btn btn-outline-light">Отмена</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
